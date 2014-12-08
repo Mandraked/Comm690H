@@ -51,10 +51,10 @@ function Update() {
 
         if (angle < fieldOfViewAngle * 0.5) {
             var hit : RaycastHit;
-            if (combat) {
+            if (false) {
                 RegisterSighting();
             } else if (Physics.Raycast(transform.position, playerVector.normalized, hit, sightRadius)) {
-                if (hit.collider.gameObject == player) {
+                if (hit.collider.gameObject == player || hit.collider.gameObject.tag == 'LaserBullet' || hit.collider.gameObject.tag == 'CubeBullet') {
                     RegisterSighting();
                 }
             }

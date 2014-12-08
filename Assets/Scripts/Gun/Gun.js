@@ -17,8 +17,10 @@ private var audioC : PlayerAudioController;
        // Create a new bullet pointing in the same direction as the gun 
        var newBullet : GameObject = Instantiate(Bullet, transform.position, transform.rotation); 
        if(Bullet.name=="Laser Bullet"){
+          Bullet.tag = 'LaserBullet';
        		audioC.PlayHandGunShoot();
        } else if (Bullet.name=="CubeBullet"){
+          Bullet.tag = 'CubeBullet';
        		audioC.PlayMachineGunShoot();
        }
    } 

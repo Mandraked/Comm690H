@@ -51,6 +51,7 @@ function TakeDamage(damage : int) {
 
 	if (health == 0) {
 		alive = false;
+		MainScript.GameOver();
 	}
 }
 

@@ -2,10 +2,10 @@
 
 // The speed the bullet moves 
    var Speed : float = .4; 
-   var damagePerShot : int = 20;
+   static var damagePerShot : int = 20;
    
    // The number of seconds before the bullet is automatically destroyed 
-   var SecondsUntilDestroy : float = 10; 
+   var SecondsUntilDestroy : float = 3; 
    
    private var startTime : float; 
    
@@ -24,14 +24,14 @@
        }
    }
         
-   function OnCollisionEnter(collision : Collision) {
-       //print("COLLISION Laser Bullet: "+collision.gameObject);
-       var enemyStatus : EnemyStatus = collision.gameObject.GetComponent(EnemyStatus);
+   // function OnCollisionEnter(collision : Collision) {
+   //     //print("COLLISION Laser Bullet: "+collision.gameObject);
+   //     var enemyStatus : EnemyStatus = collision.gameObject.GetComponent(EnemyStatus);
        
-       if (enemyStatus != null) {
-           enemyStatus.TakeDamage(damagePerShot);
-       }
+   //     if (enemyStatus != null) {
+   //         enemyStatus.TakeDamage(damagePerShot);
+   //     }
        
-       // Remove the Bullet from the world 
-       Destroy(this.gameObject); 
-   }
+   //     // Remove the Bullet from the world 
+   //     Destroy(this.gameObject); 
+   // }

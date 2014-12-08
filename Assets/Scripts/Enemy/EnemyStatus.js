@@ -7,6 +7,7 @@ public var healthForegroundTexture : Texture2D;
 public var healthBackgroundTexture : Texture2D;
 public var guiFont : Font;
 public var cheat : boolean = false;
+public var isBoss : boolean = false;
 
 // General references
 private var ai : AI;
@@ -96,6 +97,8 @@ function TakeDamage(damage : int) {
 
 	if (health == 0) {
 		alive = false;
+		MainScript.killCount++;
+		if (isBoss) MainScript.Victory();
 	} else {
 		audioC.PlayHurt();
 	}
@@ -110,6 +113,14 @@ function TakeDamage(damage : int) {
 	if (!ai.InCombat()) {
 		ai.EnterCombat();
 	}
+}
+
+function OnTriggerEnter (other : Collider) {
+	print('here');
+	print(other.tag);
+	Destroy(other);
+	if (other.tag == 'CubeBullet') TakeDamage(CubeBullet.damagePerShot);
+	else if (other.tag == 'LaserBullet') TakeDamage(LaserBullet.damagePerShot);
 }
 
 function GetHealth() {

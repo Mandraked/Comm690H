@@ -10,6 +10,9 @@ function Start ()
    		transform.GetChild(i).gameObject.SetActive(false);
    		gunLocks.push(true);
    	}
+    print('start');
+    print(MainScript.activeGun);
+    if (MainScript.activeGun != -1) SelectWeapon(MainScript.activeGun);
 }
  
 function Update () 
@@ -31,6 +34,7 @@ function SelectWeapon (index : int)
     // Activate the selected weapon
     	if (i == index && gunLocks[index] == false){
     		transform.GetChild(i).gameObject.SetActive(true);
+        MainScript.activeGun = index;
     		// Deactivate all other weapons
     	} else {
             transform.GetChild(i).gameObject.SetActive(false);
