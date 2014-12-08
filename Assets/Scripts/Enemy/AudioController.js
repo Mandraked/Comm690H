@@ -3,12 +3,10 @@
 public var shootClip : AudioClip;
 public var hurtClip : AudioClip;
 public var deathClip : AudioClip;
-public var discoveryClip : AudioClip;
 
 private var shootAudio : AudioSource;
 private var hurtAudio : AudioSource;
 private var deathAudio : AudioSource;
-private var discoveryAudio : AudioSource;
 
 function Awake() {
     shootAudio = gameObject.AddComponent(AudioSource);
@@ -31,13 +29,6 @@ function Awake() {
     deathAudio.playOnAwake = false;
     deathAudio.volume = 0.8;
     deathAudio.dopplerLevel = 0.0;
-
-    discoveryAudio = gameObject.AddComponent(AudioSource);
-    discoveryAudio.clip = discoveryClip;
-    discoveryAudio.loop = false;
-    discoveryAudio.playOnAwake = false;
-    discoveryAudio.volume = 0.8;
-    discoveryAudio.dopplerLevel = 0.0;
 }
 
 function Update() {
@@ -54,8 +45,4 @@ function PlayHurt() {
 
 function PlayDeath() {
     deathAudio.Play();
-}
-
-function PlayDiscovery() {
-    discoveryAudio.Play();
 }

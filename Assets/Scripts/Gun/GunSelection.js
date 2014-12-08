@@ -1,6 +1,6 @@
 ﻿#pragma strict
 
-private var gunLocks = new Array();
+static var gunLocks = new Array();
 
 function Start () 
 {
@@ -14,14 +14,14 @@ function Start ()
  
 function Update () 
 {
-   if (Input.GetKeyDown("1")) 
-   {
-      SelectWeapon(0);
-   }    
-   else if (Input.GetKeyDown("2")) 
-   {
-      SelectWeapon(1);
-   } 
+  if (Input.GetKeyDown("1")) 
+  {
+    SelectWeapon(0);
+  }    
+  else if (Input.GetKeyDown("2")) 
+  {
+    SelectWeapon(1);
+  } 
 }
  
 function SelectWeapon (index : int) 
@@ -38,8 +38,13 @@ function SelectWeapon (index : int)
     }
 }
 
-function UnlockWeapon (index : int)
+static function UnlockWeapons (index : int)
 {
 	gunLocks[index] = false;
-	SelectWeapon(index);
+}
+
+function UnlockWeapon (index : int)
+{
+  gunLocks[index] = false;
+  SelectWeapon(index);
 }

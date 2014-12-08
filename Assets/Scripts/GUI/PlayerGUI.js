@@ -1,7 +1,8 @@
 ﻿#pragma strict
+
 var healthBarLength : float;
 var oxygenBarLength : float;
-private var wearingSpaceSuit : boolean;
+static var wearingSpaceSuit : boolean;
 private var audioBarLength : float;
 private var handGunChargeBarLength : float;
 private var machineGunChargeBarLength : float;
@@ -33,7 +34,9 @@ private var textStyle : GUIStyle;
 private var audioC : PlayerAudioController;
 
 function Start () {
-	wearingSpaceSuit = true;
+	if (MainScript.currentScene == 2)	wearingSpaceSuit = false;
+	else wearingSpaceSuit = true;
+
 	player = GameObject.FindGameObjectWithTag("Player");
 	playerStatus = player.GetComponent(PlayerStatus);
 	headsetAudio = GetComponent(HeadsetAudioManager);
@@ -79,7 +82,7 @@ function Update () {
 }
 
 function OnGUI() {
-	if(wearingSpaceSuit){
+	if(wearingSpaceSuit || MainScript.currentScene == 1){
 		//Health
 		var healthText : GUIContent = GUIContent("<color=white>Health: "+parseInt(curHealth)+"/"+maxHealth+"</color>");
 		if(curHealth > 0){

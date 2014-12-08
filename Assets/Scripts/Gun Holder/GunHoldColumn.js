@@ -18,14 +18,23 @@ function Start () {
 
 function Update () {
 	if(Gun.activeSelf){
-		Gun.transform.Translate(Vector3.up * upDown); t += speed *(Time.deltaTime); upDown = (Mathf.Sin(t))/hightDiv;
+		if (MainScript.currentScene != 2)
+		{
+			if (!GunSelection.gunLocks[keyboardShortcut-1]) Gun.SetActive(false);
+		}
+		Gun.transform.Translate(Vector3.up * upDown); 
+		t += speed *(Time.deltaTime); 
+		upDown = (Mathf.Sin(t))/hightDiv;
 	}
 }
 
 function OnTriggerEnter (other : Collider) {
 	if(other.gameObject.tag == "Player"){
+		print('weaponPickup');
 		audioC.PlayGunPickup();
+		GunMouseController.hasGun = true;
 		GameObject.Find("astronautglove").SendMessage("UnlockWeapon", keyboardShortcut-1);
 		Gun.SetActive(false);
+		MainScript.guns[keyboardShortcut-1] = true;
 	}
 }

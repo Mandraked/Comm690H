@@ -24,7 +24,7 @@
    }
         
    function OnCollisionEnter(collision : Collision) {
-   		print("COLLISION Cube Bullet: "+collision.gameObject);
+   		//print("COLLISION Cube Bullet: "+collision.gameObject);
        var enemyStatus : EnemyStatus = collision.gameObject.GetComponent(EnemyStatus);
        
        if (enemyStatus != null) {
