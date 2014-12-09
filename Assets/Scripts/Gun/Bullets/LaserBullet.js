@@ -24,14 +24,14 @@
        }
    }
         
-   // function OnCollisionEnter(collision : Collision) {
-   //     //print("COLLISION Laser Bullet: "+collision.gameObject);
-   //     var enemyStatus : EnemyStatus = collision.gameObject.GetComponent(EnemyStatus);
+   function OnCollisionEnter(collision : Collision) {
+       //print("COLLISION Laser Bullet: "+collision.gameObject);
+       // var enemyStatus : EnemyStatus = collision.gameObject.GetComponent(EnemyStatus);
        
-   //     if (enemyStatus != null) {
-   //         enemyStatus.TakeDamage(damagePerShot);
-   //     }
+       // if (enemyStatus != null) {
+       //     enemyStatus.TakeDamage(damagePerShot);
+       // }
        
-   //     // Remove the Bullet from the world 
-   //     Destroy(this.gameObject); 
-   // }
+       // Remove the Bullet from the world 
+       Destroy(this.gameObject); 
+   }

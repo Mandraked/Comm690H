@@ -16,7 +16,7 @@ private var choking : boolean;
 
 function Awake() {
 	timer = 0.0;
-	health = maxHealth;
+	health = MainScript.playerHealth;
 	oxygen = maxOxygen;
 	alive = true;
 	choking = false;
@@ -40,6 +40,7 @@ function Update() {
 
 function TakeDamage(damage : int) {
 	health -= damage;
+	MainScript.playerHealth -= damage;
 
 	if (health < 0) {
 		health = 0;

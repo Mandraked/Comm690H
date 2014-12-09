@@ -1,7 +1,10 @@
 ﻿#pragma strict
 
+static var isTesting = false;
+
 static var currentScene = 2;
 static var activeGun = -1;
+static var playerHealth = 100;
 static var guns = Array();
 guns.Push(false);
 guns.Push(false);
@@ -26,15 +29,39 @@ function Awake() {
 }
 
 function Update () {
+	
+}
 
+static function Reset () {
+	currentScene = 2;
+	activeGun = -1;
+	playerHealth = 100;
+	guns = Array();
+	guns.Push(false);
+	guns.Push(false);
+
+	allowScene2 = false;
+	allowScene3 = false;
+	allowScene4 = false;
+
+	currPos = Vector3(0,0,0);
+
+	gameProgression = 3;
+	sceneProgression = 3;
+	killCount = 0;
+	requiredKills = 5;
 }
 
 static function Victory () {
 	print('You win');
+	PlayerGUI.wearingSpaceSuit = false;
+	Application.LoadLevel('win-screen');
 }
 
 static function GameOver () {
 	print('You lose');
+	PlayerGUI.wearingSpaceSuit = false;
+	Application.LoadLevel('lose-screen');
 }
 
 static function checkKills () {

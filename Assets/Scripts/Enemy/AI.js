@@ -113,6 +113,7 @@ function Update() {
 
         if (isBoss && bossAttack) isAlly = false;
         else if (isBoss && !bossAttack) isAlly = true;
+        if (MainScript.isTesting) isAlly = false;
 
         if (sight.IsPlayerInSight() && !isAlly) {
             if (!combat) {

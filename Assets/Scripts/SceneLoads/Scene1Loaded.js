@@ -17,6 +17,7 @@ function distance3D(vec1, vec2)
 }
 
 function Start () {
+	Screen.showCursor = false;
 	switch(MainScript.currentScene)
 	{
 		case 1:

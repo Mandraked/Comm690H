@@ -1,8 +1,7 @@
 fileFormatVersion: 2
 guid: 776b8d249d555c24ba69705215937984
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: laser
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
