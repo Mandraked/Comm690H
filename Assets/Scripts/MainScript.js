@@ -32,7 +32,7 @@ function Update () {
 	
 }
 
-static function Reset () {
+static function ResetGame () {
 	currentScene = 2;
 	activeGun = -1;
 	playerHealth = 100;
@@ -50,17 +50,21 @@ static function Reset () {
 	sceneProgression = 3;
 	killCount = 0;
 	requiredKills = 5;
+
+	PlayerGUI.wearingSpaceSuit = false;
 }
 
 static function Victory () {
 	print('You win');
-	PlayerGUI.wearingSpaceSuit = false;
+	ResetGame();
+	yield WaitForSeconds(2);
 	Application.LoadLevel('win-screen');
 }
 
 static function GameOver () {
 	print('You lose');
-	PlayerGUI.wearingSpaceSuit = false;
+	ResetGame();
+	yield WaitForSeconds(2);
 	Application.LoadLevel('lose-screen');
 }
 
