@@ -1,13 +1,13 @@
 ﻿#pragma strict
 
 // Public constants
-public var maxHealth : int = 100;
+public var maxHealth : float = 100.0;
 public var damageDuration : float = 0.5;
 public var healthForegroundTexture : Texture2D;
 public var healthBackgroundTexture : Texture2D;
 public var guiFont : Font;
 public var cheat : boolean = false;
-public var isBoss : boolean = false;
+public var healTime : float = 5.0;
 
 // General references
 private var ai : AI;
@@ -16,8 +16,9 @@ private var audioC : AudioController;
 private var player : GameObject;
 
 // Health management
-private var health : int;
+private var health : float;
 private var alive : boolean;
+private var healthTimer : float = 0.0;
 
 // GUI
 private var maxHealthBarLength : float;
@@ -62,13 +63,18 @@ function Awake() {
 }
 
 function Update() {
+	healthTimer += Time.deltaTime;
+	if (healthTimer > healTime) TakeDamage(-0.1);
 	if (!ai.InCombat()) {
-		health = maxHealth;
+		//health = maxHealth;
 	}
 
 	// Manually damage enemy for testing
+	if (maxHealth == 500) Sight.SetIsBoss(true);
+
 	if (cheat && Input.GetKeyDown(KeyCode.M)) {
-		TakeDamage(10);
+		//print('cheat');
+		TakeDamage(500);
 	}
 }
 
@@ -78,7 +84,7 @@ function OnGUI() {
 		var angle : float = Vector3.Angle(player.transform.forward, enemyVector);
 
         if (angle <= 90) {
-        	var textContent : GUIContent = GUIContent("<color=white>" + health + "/" + maxHealth + "</color>");
+        	var textContent : GUIContent = GUIContent("<color=white>" + Mathf.Round(health) + "/" + maxHealth + "</color>");
     		var targetPos : Vector2 = Camera.main.WorldToScreenPoint(transform.position) + displacementVector;
     		targetPos.y = Screen.height - targetPos.y;
     		GUI.Label(new Rect(targetPos.x - maxHealthBarLength / 2, targetPos.y, maxHealthBarLength, healthBarHeight), GUIContent.none, healthBackgroundStyle);
@@ -88,37 +94,36 @@ function OnGUI() {
 	}
 }
 
-function TakeDamage(damage : int) {
+function TakeDamage(damage : float) {
+	if (damage > 0) healthTimer = 0.0;
 	health -= damage;
+	//health -= 100;
+	
+	if (health < 0) health = 0;
 
-	if (health < 0) {
-		health = 0;
-	}
+	if (health > maxHealth) health = maxHealth;
 
 	if (health == 0) {
 		alive = false;
 		MainScript.killCount++;
-		if (isBoss) MainScript.Victory();
-	} else {
+		if (Sight.GetIsBoss()) MainScript.bossKillCount++;
+	} else if (health < 20) {
 		audioC.PlayHurt();
 	}
 
 	var healthF : float = health;
 	var maxHealthF : float = maxHealth;
 
-	healthBarLength = maxHealthBarLength * (healthF / maxHealthF);
+	healthBarLength = maxHealthBarLength * (Mathf.Round(healthF) / maxHealthF);
 
-	particles.OverrideEmission();
+	if (damage > 0) particles.OverrideEmission();
 
-	if (!ai.InCombat()) {
+	if (!ai.InCombat() && damage > 0) {
 		ai.EnterCombat();
 	}
 }
 
 function OnTriggerEnter (other : Collider) {
-	print('here');
-	print(other.tag);
-	Destroy(other);
 	if (other.tag == 'CubeBullet') TakeDamage(CubeBullet.damagePerShot);
 	else if (other.tag == 'LaserBullet') TakeDamage(LaserBullet.damagePerShot);
 }

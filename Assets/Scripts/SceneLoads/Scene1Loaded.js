@@ -58,6 +58,13 @@ function Start () {
 			break;
 	}
 
+	if (MainScript.sceneProgression != 6)
+	{
+		Destroy(GameObject.FindWithTag('Boss1'));
+		Destroy(GameObject.FindWithTag('Boss2'));
+		Destroy(GameObject.FindWithTag('Boss3'));
+	}
+
 	MainScript.currentScene = 1;
 	Camera.main.enabled = true;
 }

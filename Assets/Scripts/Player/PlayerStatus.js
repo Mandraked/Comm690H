@@ -1,7 +1,8 @@
 #pragma strict
 
-public var maxHealth : int = 100;
+public var maxHealth : float = 100.0;
 public var maxOxygen : int = 100;
+public var healTime : float = 5.0;
 
 public var chokingDamage : int = 10;
 public var passiveOxygenDelta : int = 1;
@@ -9,7 +10,8 @@ public var passiveOxygenDelta : int = 1;
 public var updateTime : float = 2.0;
 
 private var timer : float = 0.0;
-private var health : int;
+private var timerHealth : float = 0.0;
+private var health : float;
 private var oxygen : int;
 private var alive : boolean;
 private var choking : boolean;
@@ -23,6 +25,7 @@ function Awake() {
 }
 
 function Update() {
+	timerHealth += Time.deltaTime;
 	timer += Time.deltaTime;
 	if (timer >= updateTime) {
 		timer = 0.0;
@@ -36,9 +39,11 @@ function Update() {
 			TakeDamage(chokingDamage);
 		}
 	}
+	if (timerHealth >= healTime) TakeDamage(-0.1);
 }
 
-function TakeDamage(damage : int) {
+function TakeDamage(damage : float) {
+	if (damage > 0) timerHealth = 0.0;
 	health -= damage;
 	MainScript.playerHealth -= damage;
 

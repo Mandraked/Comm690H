@@ -1,6 +1,6 @@
 #pragma strict
 
-public var restingFieldOfViewAngle : float = 120.0;
+public var restingFieldOfViewAngle : float = 360.0;
 public var combatFieldOfViewAngle : float = 360.0;
 public var restingSightRadius : float = 18.0;
 public var combatSightRadius : float = 35.0;
@@ -16,6 +16,10 @@ private var sightRadius : float;
 private var ai : AI;
 private var player : GameObject;
 
+private static var hostile : boolean = false;
+public static var isBoss : boolean = false;
+private static var bossAttack : boolean = false;
+
 function Awake() {
     ai = GetComponent(AI);
     player = GameObject.FindGameObjectWithTag(Constants.PLAYER);
@@ -23,44 +27,57 @@ function Awake() {
 }
 
 function Update() {
-    var playerVector : Vector3 = player.transform.position - transform.position;
-    var playerDistance: float = Mathf.Abs(playerVector.magnitude);
+    //print(hostile);
 
-    if (playerDistance <= lightRadius) {
-        ai.EnableLight();
-    } else {
-        ai.DisableLight();
-    }
+    if (bossAttack) hostile = true;
 
-    if (playerDistance <= assuredSightRadius) {
-        combat = true;
-    }
+    if (hostile) {
+        var playerVector : Vector3 = player.transform.position - transform.position;
+        var playerDistance: float = Mathf.Abs(playerVector.magnitude);
 
-    if (combat) {
-        sightRadius = combatSightRadius;
-        fieldOfViewAngle = combatFieldOfViewAngle;
-    } else {
-        sightRadius = restingSightRadius;
-        fieldOfViewAngle = restingFieldOfViewAngle;
-    }
+        if (playerDistance <= lightRadius) {
+            ai.EnableLight();
+        } else {
+            ai.DisableLight();
+        }
 
-    if (playerDistance <= sightRadius) {
-        playerInSight = false;
+        if (playerDistance <= assuredSightRadius) {
+            combat = true;
+        }
 
-        var angle : float = Vector3.Angle(playerVector, transform.forward);
+        if (combat) {
+            sightRadius = combatSightRadius;
+            fieldOfViewAngle = combatFieldOfViewAngle;
+        } else {
+            sightRadius = restingSightRadius;
+            fieldOfViewAngle = restingFieldOfViewAngle;
+        }
 
-        if (angle < fieldOfViewAngle * 0.5) {
-            var hit : RaycastHit;
-            if (false) {
-                RegisterSighting();
-            } else if (Physics.Raycast(transform.position, playerVector.normalized, hit, sightRadius)) {
-                if (hit.collider.gameObject == player || hit.collider.gameObject.tag == 'LaserBullet' || hit.collider.gameObject.tag == 'CubeBullet') {
-                    RegisterSighting();
+        if (playerDistance <= sightRadius) {
+            playerInSight = false;
+    
+            var angle : float = Vector3.Angle(playerVector, transform.forward);
+
+            if (angle < fieldOfViewAngle) {
+                var hit : RaycastHit;
+                //print('here');
+                
+                if (Physics.Raycast(transform.position, playerVector.normalized, hit, sightRadius)) {
+                    if (hit.collider.gameObject == player || hit.collider.gameObject.tag == 'LaserBullet' || hit.collider.gameObject.tag == 'CubeBullet') {
+                        RegisterSighting();
+                    }
+                    else
+                    {
+                        //print(hit.collider.gameObject);
+                        //print('fail');
+                        playerInSight = false;
+                    }
                 }
             }
+            else playerInSight = false;
+        } else {
+            playerInSight = false;
         }
-    } else {
-        playerInSight = false;
     }
 }
 
@@ -79,4 +96,28 @@ function SetCombat(combat : boolean) {
 function RegisterSighting() {
     playerInSight = true;
     lastSighting = player.transform.position;
+}
+
+static function SetHostile(hostile : boolean) {
+    this.hostile = hostile;
+}
+
+static function GetHostile() {
+    return this.hostile;
+}
+
+static function SetBossAttack (attack : boolean) {
+    this.bossAttack = attack;
+}
+
+static function GetBossAttack () {
+    return this.bossAttack;
+}
+
+static function GetIsBoss () {
+    return this.isBoss;
+}
+
+static function SetIsBoss (boss : boolean) {
+    this.isBoss = boss;
 }

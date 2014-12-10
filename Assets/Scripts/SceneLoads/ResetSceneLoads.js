@@ -15,15 +15,15 @@ function OnTriggerEnter (other : Collider) {
 		{
 			case 3:
 				LoadScene.scene = 'Scene4';
-				AI.isAlly = true;
+				Sight.SetHostile(false);
 				break;
 			case 4:
 				LoadScene.scene = 'Scene3';
-				AI.isAlly = false;
+				Sight.SetHostile(true);
 				break;
 			case 5:
 				LoadScene.scene = 'Scene4';
-				AI.isAlly = true;
+				Sight.SetHostile(false);
 				break;
 		}
 		//print('trigger');
@@ -32,5 +32,6 @@ function OnTriggerEnter (other : Collider) {
 }
 
 function Update () {
-
+	if (MainScript.checkKillsBoss()) MainScript.Victory();
+	print(MainScript.bossKillCount + ' ' + MainScript.requiredBossKills);
 }

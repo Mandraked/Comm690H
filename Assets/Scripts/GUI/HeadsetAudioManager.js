@@ -46,7 +46,7 @@ var qSamples: int = 1024;  // array size
  }
  
  function Update () {
-     AnalyzeSound();
+    AnalyzeSound();
  }
  
  function GetCurrentSample () {

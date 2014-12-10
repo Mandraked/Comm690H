@@ -75,9 +75,9 @@ function Start () {
 function Update () {
 	healthBarLengthUpdate();
 	oxygenBarLengthUpdate();
-	audioBarLengthUpdate();
 	handGunChargeBarLengthUpdtate();
 	machineGunChargeBarLengthUpdtate();
+	audioBarLengthUpdate();
 	footsteps();
 }
 

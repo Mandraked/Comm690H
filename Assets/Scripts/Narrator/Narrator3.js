@@ -58,7 +58,7 @@ function OnGUI() {
 
 function OnTriggerEnter(other : Collider) {
 	print(MainScript.sceneProgression);
-	if (!triggered && other.gameObject == player && MainScript.sceneProgression == 6 && !AI.isAlly) {
+	if (!triggered && other.gameObject == player && MainScript.sceneProgression == 6 && !Sight.GetHostile()) {
 		triggered = true;
 		scriptAudio.Play();
 		display = true;

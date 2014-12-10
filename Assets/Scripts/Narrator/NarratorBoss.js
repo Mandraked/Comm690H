@@ -43,7 +43,7 @@ function Update() {
 		timer = 0.0;
 		if (index >= text.length) {
 			display = false;
-			AI.bossAttack = true;
+			Sight.SetBossAttack(true);
 		} else {
 			scriptAudio.Play();
 		}

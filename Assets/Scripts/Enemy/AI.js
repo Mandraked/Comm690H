@@ -1,14 +1,10 @@
 #pragma strict
 
-static var isAlly = true;
-static var bossAttack = false;
-
 // General constants
 public var followSpeed : float = 4.5;
 public var resetSpeed : float = 3.5;
 public var followStoppingDistance : float = 12.0;
 public var resetStoppingDistance : float = 1.0;
-public var isBoss : boolean = false;
 
 // Death constants
 public var finalOffset : float = 0.5;
@@ -111,11 +107,7 @@ function Update() {
             StopShooting();
         }
 
-        if (isBoss && bossAttack) isAlly = false;
-        else if (isBoss && !bossAttack) isAlly = true;
-        if (MainScript.isTesting) isAlly = false;
-
-        if (sight.IsPlayerInSight() && !isAlly) {
+        if (sight.IsPlayerInSight()) {
             if (!combat) {
                 EnterCombat();
             }
@@ -149,6 +141,7 @@ function Update() {
 }
 
 function EnterCombat() {
+    audioC.PlayDiscovery();
     particles.RequestColor(Constants.YELLOW);
     enemyLight.color = Constants.YELLOW;
     sight.SetCombat(true);
@@ -208,7 +201,7 @@ function Death() {
     StopShooting();
     CacheDestinationAndStop();
     initialOffset = nav.baseOffset;
-    Destroy(gameObject, deathDuration);
+    Destroy(transform.parent.gameObject, deathDuration);
 }
 
 function StopShooting() {

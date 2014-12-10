@@ -1,6 +1,7 @@
 ﻿#pragma strict
 
 static var scene = "";
+static var talkedToBoss = false;
 var spaceSuit : GameObject;
 var alphaFadeValue = 1;
 var blackTexture : Texture;
@@ -57,6 +58,7 @@ function OnTriggerEnter(other : Collider)
 			case 3:
 				if (MainScript.checkKills())
 				{
+					MainScript.killCount = 0;
 					PlayerGUI.wearingSpaceSuit = true;
 					Camera.main.enabled = false;
 					MainScript.allowScene3 = false;
@@ -65,7 +67,12 @@ function OnTriggerEnter(other : Collider)
 				}
 				break;
 			case 4:
-				if (MainScript.sceneProgression == 6) break;
+				if (MainScript.checkKills2()) talkedToBoss = true;
+				print(MainScript.checkKills2() + ' ' + talkedToBoss);
+				if (!talkedToBoss) break;
+				talkedToBoss = false;
+				MainScript.bossKillCount = 0;
+				//if (MainScript.sceneProgression == 6) break;
 				PlayerGUI.wearingSpaceSuit = true;
 				Camera.main.enabled = false;
 				MainScript.allowScene4 = false;
@@ -75,12 +82,12 @@ function OnTriggerEnter(other : Collider)
 		}
 
 		for (var i=0;i<2; i++)
-	  {
-	    if (MainScript.guns[i] && GunSelection.gunLocks[i])
-	    {
-	    	GunSelection.UnlockWeapons(i);
-	    }
-	  }
+	  	{
+		    if (MainScript.guns[i] && GunSelection.gunLocks[i])
+		    {
+		    	GunSelection.UnlockWeapons(i);
+		    }
+	  	}
 	}
 }
 
