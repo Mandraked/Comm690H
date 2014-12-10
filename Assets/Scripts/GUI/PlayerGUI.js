@@ -213,7 +213,8 @@ function breathing(){
 }
 
 function footsteps(){
-	if (Input.GetKey ("up")||Input.GetKey ("down")||Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.RightArrow)){
+	if (Input.GetKey ("up")||Input.GetKey ("down")||Input.GetKey (KeyCode.LeftArrow)||Input.GetKey (KeyCode.RightArrow)
+		|| Input.GetKey("w") || Input.GetKey("a") || Input.GetKey("s") || Input.GetKey("d")){
 		if(GameObject.FindGameObjectWithTag("PlanetSurface") != null){
 			audioC.PlayFootstepOutside();
 		} else {

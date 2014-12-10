@@ -32,6 +32,6 @@ function OnTriggerEnter (other : Collider) {
 }
 
 function Update () {
-	if (MainScript.checkKillsBoss()) MainScript.Victory();
-	print(MainScript.bossKillCount + ' ' + MainScript.requiredBossKills);
+	// if (MainScript.checkKillsBoss()) MainScript.Victory();
+	// print(MainScript.bossKillCount + ' ' + MainScript.requiredBossKills);
 }

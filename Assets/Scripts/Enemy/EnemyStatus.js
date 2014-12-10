@@ -32,6 +32,8 @@ private var displacementVector : Vector2;
 
 function Awake() {
 	ai = GetComponent(AI);
+	//if (maxHealth == 500) Sight.SetIsBoss(true);
+
 	particles = GetComponent(ParticleManager);
 	audioC = GetComponent(AudioController);
 	player = GameObject.FindGameObjectWithTag(Constants.PLAYER);
@@ -70,7 +72,6 @@ function Update() {
 	}
 
 	// Manually damage enemy for testing
-	if (maxHealth == 500) Sight.SetIsBoss(true);
 
 	if (cheat && Input.GetKeyDown(KeyCode.M)) {
 		//print('cheat');
@@ -106,7 +107,7 @@ function TakeDamage(damage : float) {
 	if (health == 0) {
 		alive = false;
 		MainScript.killCount++;
-		if (Sight.GetIsBoss()) MainScript.bossKillCount++;
+		//if (Sight.GetIsBoss()) MainScript.bossKillCount++;
 	} else if (health < 20) {
 		audioC.PlayHurt();
 	}

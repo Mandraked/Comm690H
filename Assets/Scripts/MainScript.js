@@ -60,6 +60,7 @@ static function ResetGame () {
 	PlayerGUI.wearingSpaceSuit = false;
 	Sight.SetHostile(false);
 	LoadScene.talkedToBoss = false;
+	GunMouseController.hasGun = false;
 }
 
 static function Victory () {

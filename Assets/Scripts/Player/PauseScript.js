@@ -19,8 +19,8 @@ function Update () {
 	{
 		MainScript.isPause = !MainScript.isPause;
 		Screen.showCursor = !Screen.showCursor;
-		//if (MainScript.isPause) Time.timeScale = 0;
-		//else Time.timeScale = 1;
+		if (MainScript.isPause) Time.timeScale = 0;
+		else Time.timeScale = 1;
 	}
 }
 
@@ -31,19 +31,19 @@ function OnGUI () {
 function TheMainMenu () {
 	if (GUILayout.Button("Main Menu")) {
 		MainScript.isPause = !MainScript.isPause;
-		//Time.timeScale = 1;
 		MainScript.ResetGame();
+		Time.timeScale = 1;
 		Application.LoadLevel("title-screen");
 	}
 	if (GUILayout.Button("Restart")) {
 		MainScript.isPause = !MainScript.isPause;
-		//Time.timeScale = 1;
 		MainScript.ResetGame();
+		Time.timeScale = 1;
 		Application.LoadLevel('Scene2');
 	}
 	if (GUILayout.Button("Quit")) {
 		MainScript.isPause = !MainScript.isPause;
-		//Time.timeScale = 1;
+		Time.timeScale = 1;
 		Application.Quit();
 	}
 }
